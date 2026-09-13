@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kata Spring App</title>
+    <link th:href="@{/css/user_page/create.css}" rel="stylesheet">
+</head>
+<body>
+<div class="main-wrapper">
+    <div class="content-block">
+
+        <h3>Вход в систему</h3>
+
+        <div class="form-card">
+            <form th:method="POST" th:action="@{/login}">
+
+                <div class="form-group">
+                    <label for="username" class="form-label">Логин</label>
+                    <input name="username" type="text" id="username" class="form-input"
+                           placeholder="Введите логин"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input name="password" type="text" id="password" class="form-input"
+                           placeholder="Введите пароль"/>
+                </div>
+                <input type="submit" value="Войти" class="my-custom-btn btn-submit">
+            </form>
+        </div>
+
+        <div class="btn-center-container">
+            <button class="my-custom-btn">
+                <a href="/registration">Зарегистрироваться</a>
+            </button>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
