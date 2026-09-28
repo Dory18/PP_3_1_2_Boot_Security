@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -32,6 +33,19 @@ public class Role implements GrantedAuthority {
     public Role(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Role role = (Role) object;
+        return Objects.equals(id, role.id) && Objects.equals(name, role.name) && Objects.equals(label, role.label) && Objects.equals(users, role.users);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, label, users);
     }
 
     @Override

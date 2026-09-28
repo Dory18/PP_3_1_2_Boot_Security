@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -38,13 +39,12 @@ public class User implements UserDetails {
     @Size(min = 4, message = "Не меньше 4 знаков")
     @Column(unique = true)
     private String username;
-
-    @Size(min = 4, message = "Не меньше 4 знаков")
+    @Column(name = "password")
     private String password;
 
     @Transient
     private String passwordConfirm;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
 
     public User() {
@@ -76,6 +76,19 @@ public class User implements UserDetails {
                ", middleName='" + middleName + '\'' +
                ", age=" + age +
                '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        User user = (User) object;
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(lastName, user.lastName) && Objects.equals(firstName, user.firstName) && Objects.equals(middleName, user.middleName) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(passwordConfirm, user.passwordConfirm) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, middleName, age, username, password, passwordConfirm, roles);
     }
 
     @Override

@@ -44,11 +44,14 @@ public class AdminController {
     public String editUser(@RequestParam(value = "id") Long id,
                            ModelMap model) {
         model.addAttribute("user", userService.findById(id));
+        model.addAttribute("allRoles", roleService.findAll());
         return "user_page/edit";
     }
 
     @PostMapping("/edit")
-    public String update(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String update(@ModelAttribute("user") @Valid User user, Model model,
+                         BindingResult bindingResult) {
+        model.addAttribute("allRoles", roleService.findAll());
         if (bindingResult.hasErrors()) {
             return "user_page/edit";
         }
