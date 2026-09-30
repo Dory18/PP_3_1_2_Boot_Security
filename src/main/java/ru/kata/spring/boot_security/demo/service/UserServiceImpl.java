@@ -44,15 +44,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     @Override
     public void save(User user) {
-        if (user.getId() == null) {
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        } else {
-            User existingUser = findById(user.getId());
-            user.setPassword(existingUser.getPassword());
-        }
         if (user.getRoles() == null) {
             user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         }
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
 
